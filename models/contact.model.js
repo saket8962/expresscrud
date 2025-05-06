@@ -1,8 +1,6 @@
-const { default: mongoose } = require("mongoose");
+import mongoose from "mongoose";
 
-const mongooseUse = require("mongoose");
-
-const contactShema = mongooseUse.Schema({
+const contactShema = mongoose.Schema({
     first_name:{
         type:String
     },
@@ -20,6 +18,7 @@ const contactShema = mongooseUse.Schema({
     },
 })
 
-const contact = mongoose.model("Contact",contactShema)
+const Contact = mongoose.model("Contact",contactShema)
 
-module.exports = contact
+// module.exports = contact
+export default Contact
