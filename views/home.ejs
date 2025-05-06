@@ -29,7 +29,7 @@
                                 <tbody>
                                     <% Contacts.forEach((item, index) => { %>
                                         <tr>
-                                            <td><%= index + 1 %></td>
+                                            <td><%= pagingCounter++  %></td>
                                             <td><%= item?.first_name %></td>
                                             <td><%= item?.last_name %></td>
                                             <td><%= item?.email %></td>
@@ -114,6 +114,25 @@
                                     </tr>
                                 </tbody> -->
                             </table>
+                            <nav aria-label="...">
+                                <ul class="pagination">
+                                    <% let previData = hasPrevPage ? "" : "disabled" %>
+                                  <li class="page-item <% previData %>">
+                                    <a class="page-link" href="/?page=<%= prevPage %>">Previous</a>
+                                  </li>
+
+                                  <% for(i=1; i<= totalPages; i++) { %> 
+                                  <% let activePage = currentPage === i ? "active" : "" %>
+ 
+                                  <li class="page-item "><a class="page-link <%= activePage %> " href="/?page=<%= i %>"><%= i %> </a></li>
+                     <% } %>
+                     <% let nextPageCount = hasNextPage ? "" : "disabled" %>
+
+                                  <li class="page-item <% nextPageCount %>">
+                                    <a class="page-link" href="/?page=<%= nextPage %>">Next</a>
+                                  </li>
+                                </ul>
+                              </nav>
                         </div>
 
                     </div>

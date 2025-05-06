@@ -1,9 +1,34 @@
+import { paginate } from "mongoose-paginate-v2";
 import Contact from "../models/contact.model.js";
 import mongoose from "mongoose";
 export const getContact = async (req, res) => {
   // res.send("route working")
-  const Contacts = await Contact.find();
-  res.render("home", { Contacts });
+  try {
+    const {page = 1 , limit =3 } = req.query
+
+    const option = {
+      page: parseInt(page || 1),
+      limit: parseInt(limit),
+    }
+    const result = await Contact.paginate({}, option)
+    // const Contacts = await Contact.find();
+    // res.send(result)
+    res.render("home", {
+      "totalDocs": result.totalDocs,
+      "limit": result.limit,
+      "totalPages": result.totalPages,
+      "currentPage": result.page,
+      "pagingCounter": result.pagingCounter,
+      "hasPrevPage": result.hasPrevPage,
+      "hasNextPage": result.hasNextPage,
+      "prevPage": result.prevPage,
+      "nextPage": result.nextPage,
+      Contacts:result.docs
+    });
+  } catch (err) {
+    console.log("err", err)
+  }
+
 };
 
 export const getContactPage = async (req, res) => {
